@@ -6,4 +6,4 @@ Although this is internationally standardized, there is variations on national a
 # Simulation
 ![Capture](https://user-images.githubusercontent.com/113982207/201496664-e72bdc2c-7b07-4077-ac59-0ba1443bc18b.PNG)
 # Flowchart
-![Untitled Diagram](https://user-images.githubusercontent.com/113982207/201496674-0533f184-e70a-46ca-ba69-b2813877266f.png)
+![Flowchart](https://user-images.githubusercontent.com/113982207/201496684-57dc4823-ccd6-4249-bffb-2cd26b439618.jpg)
