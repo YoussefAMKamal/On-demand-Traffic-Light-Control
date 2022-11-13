@@ -658,15 +658,15 @@ END GROUP
  .debug_abbrev  0x0000076a       0x68 main.o
  .debug_abbrev  0x000007d2       0x96 EUCAL/DIO Driver/DIO.o
 
-.debug_line     0x00000000      0xb23
+.debug_line     0x00000000      0xb00
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32a/avr5/crtatmega32a.o
- .debug_line    0x00000116      0x410 Application/app.o
- .debug_line    0x00000526      0x194 EUCAL/Timer Driver/timer.o
- .debug_line    0x000006ba       0xec HAL/Button Driver/button.o
- .debug_line    0x000007a6      0x10c HAL/LED Driver/led.o
- .debug_line    0x000008b2       0x63 main.o
- .debug_line    0x00000915      0x20e EUCAL/DIO Driver/DIO.o
+ .debug_line    0x00000116      0x3ed Application/app.o
+ .debug_line    0x00000503      0x194 EUCAL/Timer Driver/timer.o
+ .debug_line    0x00000697       0xec HAL/Button Driver/button.o
+ .debug_line    0x00000783      0x10c HAL/LED Driver/led.o
+ .debug_line    0x0000088f       0x63 main.o
+ .debug_line    0x000008f2      0x20e EUCAL/DIO Driver/DIO.o
 
 .debug_frame    0x00000000      0x1ec
  *(.debug_frame)
@@ -682,11 +682,11 @@ END GROUP
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_str     0x00000196      0x216 Application/app.o
                                 0x22f (size before relaxing)
- .debug_str     0x000003ac       0xde EUCAL/Timer Driver/timer.o
-                                0x1e9 (size before relaxing)
- .debug_str     0x0000048a       0x57 HAL/Button Driver/button.o
+ .debug_str     0x000003ac       0x81 EUCAL/Timer Driver/timer.o
+                                0x202 (size before relaxing)
+ .debug_str     0x0000042d       0x57 HAL/Button Driver/button.o
                                 0x1d0 (size before relaxing)
- .debug_str     0x000004e1       0x3c HAL/LED Driver/led.o
+ .debug_str     0x00000484       0x99 HAL/LED Driver/led.o
                                 0x1bc (size before relaxing)
  .debug_str     0x0000051d       0x11 main.o
                                 0x189 (size before relaxing)
