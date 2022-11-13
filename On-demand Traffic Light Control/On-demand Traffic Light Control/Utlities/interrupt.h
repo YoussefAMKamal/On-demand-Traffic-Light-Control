@@ -11,12 +11,11 @@
 
 // Including Files
 #include "registers.h"
-#include "../../Utlities/BIT_Math.h"
 
 // Enable interrupt
 # define sei()  __asm__ __volatile__ ("sei" ::: "memory")
 
-/* External Interrupt Request 0 */
+// External Interrupt Request 0
 #define INT0_vect  __vector_1
 
 // Rising edge

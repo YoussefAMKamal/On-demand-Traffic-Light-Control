@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 00000868  00000000  00000000  0000203b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000b23  00000000  00000000  000028a3  2**0
+  8 .debug_line   00000b00  00000000  00000000  000028a3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001ec  00000000  00000000  000033c8  2**2
+  9 .debug_frame  000001ec  00000000  00000000  000033a4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000058c  00000000  00000000  000035b4  2**0
+ 10 .debug_str    0000058c  00000000  00000000  00003590  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000b48  00000000  00000000  00003b40  2**0
+ 11 .debug_loc    00000b48  00000000  00000000  00003b1c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000c0  00000000  00000000  00004688  2**0
+ 12 .debug_ranges 000000c0  00000000  00000000  00004664  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -561,10 +561,20 @@ void APP_Start(void)
  2fa:	08 95       	ret
 
 000002fc <Timer_Init>:
+double tickTime,maxDelay;
+
+void Timer_Init(void)
+{
+		// Choose timer mode
+		TIMER0_COUNTER = 0x00; // Normal mode
  2fc:	13 be       	out	0x33, r1	; 51
  2fe:	08 95       	ret
 
 00000300 <Timer_ON>:
+}
+
+void Timer_ON(uint16_t mSec)
+{
  300:	8f 92       	push	r8
  302:	9f 92       	push	r9
  304:	af 92       	push	r10
@@ -574,8 +584,12 @@ void APP_Start(void)
  30c:	ef 92       	push	r14
  30e:	ff 92       	push	r15
  310:	bc 01       	movw	r22, r24
+			// Reset counter
+			number_of_countes = 0;
  312:	10 92 68 00 	sts	0x0068, r1	; 0x800068 <number_of_countes+0x1>
  316:	10 92 67 00 	sts	0x0067, r1	; 0x800067 <number_of_countes>
+			
+			tickTime = 256.0/1000.0;		// 256ms/1000 = prescaler/FCPU = time needed for 1 tick
  31a:	8f e6       	ldi	r24, 0x6F	; 111
  31c:	92 e1       	ldi	r25, 0x12	; 18
  31e:	a3 e8       	ldi	r26, 0x83	; 131
@@ -584,6 +598,7 @@ void APP_Start(void)
  326:	90 93 62 00 	sts	0x0062, r25	; 0x800062 <tickTime+0x1>
  32a:	a0 93 63 00 	sts	0x0063, r26	; 0x800063 <tickTime+0x2>
  32e:	b0 93 64 00 	sts	0x0064, r27	; 0x800064 <tickTime+0x3>
+			maxDelay = tickTime*pow(2,8);	// max delay time needed to make a timer of 256 ms
  332:	8f e6       	ldi	r24, 0x6F	; 111
  334:	92 e1       	ldi	r25, 0x12	; 18
  336:	a3 e8       	ldi	r26, 0x83	; 131
@@ -592,6 +607,9 @@ void APP_Start(void)
  33e:	90 93 6c 00 	sts	0x006C, r25	; 0x80006c <maxDelay+0x1>
  342:	a0 93 6d 00 	sts	0x006D, r26	; 0x80006d <maxDelay+0x2>
  346:	b0 93 6e 00 	sts	0x006E, r27	; 0x80006e <maxDelay+0x3>
+			
+			// getting initial time and times of repetition
+			if (maxDelay > mSec)
  34a:	80 e0       	ldi	r24, 0x00	; 0
  34c:	90 e0       	ldi	r25, 0x00	; 0
  34e:	0e 94 ec 04 	call	0x9d8	; 0x9d8 <__floatunsisf>
@@ -604,6 +622,8 @@ void APP_Start(void)
  35e:	0e 94 46 04 	call	0x88c	; 0x88c <__cmpsf2>
  362:	88 23       	and	r24, r24
  364:	dc f4       	brge	.+54     	; 0x39c <Timer_ON+0x9c>
+			{
+				initialTime = (maxDelay - mSec)/tickTime;
  366:	a7 01       	movw	r20, r14
  368:	96 01       	movw	r18, r12
  36a:	6f e6       	ldi	r22, 0x6F	; 111
@@ -619,11 +639,14 @@ void APP_Start(void)
  382:	0e 94 bd 04 	call	0x97a	; 0x97a <__fixunssfsi>
  386:	70 93 6a 00 	sts	0x006A, r23	; 0x80006a <initialTime+0x1>
  38a:	60 93 69 00 	sts	0x0069, r22	; 0x800069 <initialTime>
+				number_of_flags = 1;
  38e:	81 e0       	ldi	r24, 0x01	; 1
  390:	90 e0       	ldi	r25, 0x00	; 0
  392:	90 93 66 00 	sts	0x0066, r25	; 0x800066 <number_of_flags+0x1>
  396:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <number_of_flags>
  39a:	4a c0       	rjmp	.+148    	; 0x430 <__EEPROM_REGION_LENGTH__+0x30>
+			} 
+			else if (maxDelay == mSec)
  39c:	2f e6       	ldi	r18, 0x6F	; 111
  39e:	32 e1       	ldi	r19, 0x12	; 18
  3a0:	43 e8       	ldi	r20, 0x83	; 131
@@ -633,13 +656,20 @@ void APP_Start(void)
  3a8:	0e 94 46 04 	call	0x88c	; 0x88c <__cmpsf2>
  3ac:	81 11       	cpse	r24, r1
  3ae:	0b c0       	rjmp	.+22     	; 0x3c6 <Timer_ON+0xc6>
+			{
+				initialTime = 0;
  3b0:	10 92 6a 00 	sts	0x006A, r1	; 0x80006a <initialTime+0x1>
  3b4:	10 92 69 00 	sts	0x0069, r1	; 0x800069 <initialTime>
+				number_of_flags = 1;
  3b8:	81 e0       	ldi	r24, 0x01	; 1
  3ba:	90 e0       	ldi	r25, 0x00	; 0
  3bc:	90 93 66 00 	sts	0x0066, r25	; 0x800066 <number_of_flags+0x1>
  3c0:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <number_of_flags>
  3c4:	35 c0       	rjmp	.+106    	; 0x430 <__EEPROM_REGION_LENGTH__+0x30>
+			}
+			else
+			{
+				number_of_flags = ceil((double)mSec/maxDelay);
  3c6:	2f e6       	ldi	r18, 0x6F	; 111
  3c8:	32 e1       	ldi	r19, 0x12	; 18
  3ca:	43 e8       	ldi	r20, 0x83	; 131
@@ -653,6 +683,7 @@ void APP_Start(void)
  3e0:	5c 01       	movw	r10, r24
  3e2:	70 93 66 00 	sts	0x0066, r23	; 0x800066 <number_of_flags+0x1>
  3e6:	60 93 65 00 	sts	0x0065, r22	; 0x800065 <number_of_flags>
+				initialTime = (1 << 8) - ((double)mSec/tickTime)/number_of_flags;
  3ea:	2f e6       	ldi	r18, 0x6F	; 111
  3ec:	32 e1       	ldi	r19, 0x12	; 18
  3ee:	43 e8       	ldi	r20, 0x83	; 131
@@ -681,26 +712,51 @@ void APP_Start(void)
  424:	0e 94 bd 04 	call	0x97a	; 0x97a <__fixunssfsi>
  428:	70 93 6a 00 	sts	0x006A, r23	; 0x80006a <initialTime+0x1>
  42c:	60 93 69 00 	sts	0x0069, r22	; 0x800069 <initialTime>
+			}
+			
+			//setting initial value
+			TIMER0_CONTROL = initialTime;
  430:	80 91 69 00 	lds	r24, 0x0069	; 0x800069 <initialTime>
  434:	82 bf       	out	0x32, r24	; 50
+			SET_BIT(TIMER0_COUNTER,2);
  436:	83 b7       	in	r24, 0x33	; 51
  438:	84 60       	ori	r24, 0x04	; 4
  43a:	83 bf       	out	0x33, r24	; 51
+			
+			// Counting the flags
+			while(number_of_countes < number_of_flags)
  43c:	12 c0       	rjmp	.+36     	; 0x462 <__EEPROM_REGION_LENGTH__+0x62>
+			{
+				// Timer start -> setting the clock source
+				SET_BIT(TIMER_FLAG,0); // No prescaler
  43e:	88 b7       	in	r24, 0x38	; 56
  440:	81 60       	ori	r24, 0x01	; 1
  442:	88 bf       	out	0x38, r24	; 56
+				// stop after one overflow -> 256 micro second
+							
+				// wait until the overflow flag to be set
+				while (GET_BIT(TIMER_FLAG,0) == 0);
  444:	08 b6       	in	r0, 0x38	; 56
  446:	00 fe       	sbrs	r0, 0
  448:	fd cf       	rjmp	.-6      	; 0x444 <__EEPROM_REGION_LENGTH__+0x44>
+							
+				// Clear the overflow flag
+				SET_BIT(TIMER_FLAG,0);
  44a:	88 b7       	in	r24, 0x38	; 56
  44c:	81 60       	ori	r24, 0x01	; 1
  44e:	88 bf       	out	0x38, r24	; 56
+				number_of_countes++;
  450:	80 91 67 00 	lds	r24, 0x0067	; 0x800067 <number_of_countes>
  454:	90 91 68 00 	lds	r25, 0x0068	; 0x800068 <number_of_countes+0x1>
  458:	01 96       	adiw	r24, 0x01	; 1
  45a:	90 93 68 00 	sts	0x0068, r25	; 0x800068 <number_of_countes+0x1>
  45e:	80 93 67 00 	sts	0x0067, r24	; 0x800067 <number_of_countes>
+			//setting initial value
+			TIMER0_CONTROL = initialTime;
+			SET_BIT(TIMER0_COUNTER,2);
+			
+			// Counting the flags
+			while(number_of_countes < number_of_flags)
  462:	20 91 67 00 	lds	r18, 0x0067	; 0x800067 <number_of_countes>
  466:	30 91 68 00 	lds	r19, 0x0068	; 0x800068 <number_of_countes+0x1>
  46a:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <number_of_flags>
@@ -708,6 +764,12 @@ void APP_Start(void)
  472:	28 17       	cp	r18, r24
  474:	39 07       	cpc	r19, r25
  476:	18 f3       	brcs	.-58     	; 0x43e <__EEPROM_REGION_LENGTH__+0x3e>
+				// Clear the overflow flag
+				SET_BIT(TIMER_FLAG,0);
+				number_of_countes++;
+			}
+			// Timer stop
+			TIMER0_COUNTER = 0x00;
  478:	13 be       	out	0x33, r1	; 51
  47a:	ff 90       	pop	r15
  47c:	ef 90       	pop	r14
