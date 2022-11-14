@@ -31,7 +31,7 @@ int main(void)
 	LED_Init(LED_PEDESTRIANS, LED_YELLOW);
 	
 	// initializing Button
-	BUTTON_Init(PORT_D, PIN2);
+	BUTTON_Init(BUTTON_PORT, BUTTON_PIN);
 	
 	// initializing Timer
 	Timer_Init();
@@ -50,7 +50,7 @@ int main(void)
 		//		- Red led for cars will be on for 5 sec
 		//		- Led off
 			
-		BUTTON_Read(PORT_D, PIN2, state);
+		BUTTON_Read(BUTTON_PORT, BUTTON_PIN, state);
 		if (*state == HIGH)
 		{
 			for (int i=0;i<20;i++)
