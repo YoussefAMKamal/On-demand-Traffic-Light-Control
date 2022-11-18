@@ -10,7 +10,7 @@
 #define INTERRUPT_H_
 
 // Including Files
-#include "registers.h"
+#include "../../HAL/Button Driver/button.h"
 
 // Enable interrupt
 # define sei()  __asm__ __volatile__ ("sei" ::: "memory")
@@ -29,5 +29,7 @@
 	void vector1 (void) __attribute__ ((signal,used));\
 	void vector1 (void)
 
+// Test
+void Test_Interrupt(void);
 
 #endif /* INTERRUPT_H_ */

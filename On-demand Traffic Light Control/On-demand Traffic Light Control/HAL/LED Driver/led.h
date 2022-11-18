@@ -26,4 +26,7 @@ void LED_ON(uint8_t ledPort, uint8_t ledPin);
 void LED_OFF(uint8_t ledPort, uint8_t ledPin);
 void LED_Toggle(uint8_t ledPort, uint8_t ledPin);
 
+// Test
+void Test_LED(void);
+
 #endif /* LED_H_ */

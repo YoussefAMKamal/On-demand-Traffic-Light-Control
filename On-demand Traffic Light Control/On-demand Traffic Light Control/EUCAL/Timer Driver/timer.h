@@ -9,7 +9,7 @@
 #define TIMER_H_
 
 // Including Files
-#include "../../EUCAL/DIO Driver/DIO.h"
+#include "../../HAL/LED Driver/led.h"
 
 // Macros
 #define TIMER_FLAG TIFR
@@ -19,5 +19,8 @@
 // Functions Prototypes
 void Timer_Init(void);
 void Timer_ON(uint16_t mSec);
+
+// Test
+void Test_Timer(void);
 
 #endif /* TIMER_H_ */

@@ -135,6 +135,12 @@
     <Compile Include="Application\app.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="EUCAL\Interrupt Driver\Interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="EUCAL\Interrupt Driver\interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="EUCAL\Timer Driver\timer.c">
       <SubType>compile</SubType>
     </Compile>
@@ -165,9 +171,6 @@
     <Compile Include="Utlities\BIT_Math.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Utlities\interrupt.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Utlities\registers.h">
       <SubType>compile</SubType>
     </Compile>
@@ -179,6 +182,7 @@
     <Folder Include="Application" />
     <Folder Include="EUCAL" />
     <Folder Include="EUCAL\DIO Driver" />
+    <Folder Include="EUCAL\Interrupt Driver" />
     <Folder Include="EUCAL\Timer Driver" />
     <Folder Include="HAL" />
     <Folder Include="HAL\LED Driver" />

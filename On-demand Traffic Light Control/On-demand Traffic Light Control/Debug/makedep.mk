@@ -4,6 +4,8 @@
 
 Application\app.c
 
+EUCAL\Interrupt Driver\Interrupt.c
+
 EUCAL\Timer Driver\timer.c
 
 HAL\Button Driver\button.c

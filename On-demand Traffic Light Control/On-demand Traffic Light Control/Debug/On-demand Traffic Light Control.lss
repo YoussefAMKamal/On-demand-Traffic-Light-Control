@@ -13,21 +13,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000c68  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000120  00000000  00000000  00000ca4  2**0
+  5 .debug_aranges 00000138  00000000  00000000  00000ca4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001277  00000000  00000000  00000dc4  2**0
+  6 .debug_info   0000144a  00000000  00000000  00000ddc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000868  00000000  00000000  0000203b  2**0
+  7 .debug_abbrev 000008e9  00000000  00000000  00002226  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000b00  00000000  00000000  000028a3  2**0
+  8 .debug_line   00000cc1  00000000  00000000  00002b0f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001ec  00000000  00000000  000033a4  2**2
+  9 .debug_frame  00000228  00000000  00000000  000037d0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000058c  00000000  00000000  00003590  2**0
+ 10 .debug_str    00000530  00000000  00000000  000039f8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000b48  00000000  00000000  00003b1c  2**0
+ 11 .debug_loc    00000b50  00000000  00000000  00003f28  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000c0  00000000  00000000  00004664  2**0
+ 12 .debug_ranges 000000d8  00000000  00000000  00004a78  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -771,6 +771,7 @@ void Timer_ON(uint16_t mSec)
 			// Timer stop
 			TIMER0_COUNTER = 0x00;
  478:	13 be       	out	0x33, r1	; 51
+}
  47a:	ff 90       	pop	r15
  47c:	ef 90       	pop	r14
  47e:	df 90       	pop	r13
@@ -797,32 +798,57 @@ void BUTTON_Init(uint8_t buttonPort, uint8_t buttonPin)
  498:	08 95       	ret
 
 0000049a <LED_Init>:
+
+#include "led.h"
+
+// Initializing Led
+void LED_Init(uint8_t ledPort, uint8_t ledPin) 
+{
  49a:	98 2f       	mov	r25, r24
  49c:	86 2f       	mov	r24, r22
+	DIO_Init(ledPin, ledPort, OUT);
  49e:	41 e0       	ldi	r20, 0x01	; 1
  4a0:	69 2f       	mov	r22, r25
  4a2:	0e 94 6d 02 	call	0x4da	; 0x4da <DIO_Init>
  4a6:	08 95       	ret
 
 000004a8 <LED_ON>:
+}
+
+// Turn Led On
+void LED_ON(uint8_t ledPort, uint8_t ledPin)
+{
  4a8:	98 2f       	mov	r25, r24
  4aa:	86 2f       	mov	r24, r22
+	DIO_Write(ledPin, ledPort, HIGH);
  4ac:	41 e0       	ldi	r20, 0x01	; 1
  4ae:	69 2f       	mov	r22, r25
  4b0:	0e 94 f8 02 	call	0x5f0	; 0x5f0 <DIO_Write>
  4b4:	08 95       	ret
 
 000004b6 <LED_OFF>:
+}
+
+// Turn Led Off
+void LED_OFF(uint8_t ledPort, uint8_t ledPin)
+{
  4b6:	98 2f       	mov	r25, r24
  4b8:	86 2f       	mov	r24, r22
+	DIO_Write(ledPin, ledPort, LOW);
  4ba:	40 e0       	ldi	r20, 0x00	; 0
  4bc:	69 2f       	mov	r22, r25
  4be:	0e 94 f8 02 	call	0x5f0	; 0x5f0 <DIO_Write>
  4c2:	08 95       	ret
 
 000004c4 <LED_Toggle>:
+}
+
+// Toggling Led
+void LED_Toggle(uint8_t ledPort, uint8_t ledPin)
+{
  4c4:	98 2f       	mov	r25, r24
  4c6:	86 2f       	mov	r24, r22
+	DIO_Toggle(ledPin, ledPort);
  4c8:	69 2f       	mov	r22, r25
  4ca:	0e 94 83 03 	call	0x706	; 0x706 <DIO_Toggle>
  4ce:	08 95       	ret
@@ -844,6 +870,12 @@ int main(void)
  4d8:	fd cf       	rjmp	.-6      	; 0x4d4 <main+0x4>
 
 000004da <DIO_Init>:
+#include "DIO.h"
+
+// function definitions
+void DIO_Init(uint8_t pinNumber, uint8_t portNumber, uint8_t direction)
+{
+	switch (portNumber)
  4da:	62 34       	cpi	r22, 0x42	; 66
  4dc:	59 f1       	breq	.+86     	; 0x534 <DIO_Init+0x5a>
  4de:	18 f4       	brcc	.+6      	; 0x4e6 <DIO_Init+0xc>
@@ -857,8 +889,14 @@ int main(void)
  4ee:	09 f4       	brne	.+2      	; 0x4f2 <DIO_Init+0x18>
  4f0:	60 c0       	rjmp	.+192    	; 0x5b2 <DIO_Init+0xd8>
  4f2:	08 95       	ret
+	{
+		case PORT_A:
+			if (direction == IN)
  4f4:	41 11       	cpse	r20, r1
  4f6:	0e c0       	rjmp	.+28     	; 0x514 <DIO_Init+0x3a>
+			{
+				// DDRA &= ~(1 << pinNumber); // Input -> clear bit
+				CLEAR_BIT(DDRA, pinNumber);
  4f8:	4a b3       	in	r20, 0x1a	; 26
  4fa:	21 e0       	ldi	r18, 0x01	; 1
  4fc:	30 e0       	ldi	r19, 0x00	; 0
@@ -873,9 +911,14 @@ int main(void)
  50e:	84 23       	and	r24, r20
  510:	8a bb       	out	0x1a, r24	; 26
  512:	08 95       	ret
+			}
+			else if (direction == OUT)
  514:	41 30       	cpi	r20, 0x01	; 1
  516:	09 f0       	breq	.+2      	; 0x51a <DIO_Init+0x40>
  518:	6a c0       	rjmp	.+212    	; 0x5ee <DIO_Init+0x114>
+			{
+				// DDRA |= ~(1 << pinNumber); // Output -> clear bit
+				SET_BIT(DDRA, pinNumber);
  51a:	4a b3       	in	r20, 0x1a	; 26
  51c:	21 e0       	ldi	r18, 0x01	; 1
  51e:	30 e0       	ldi	r19, 0x00	; 0
@@ -889,8 +932,17 @@ int main(void)
  52e:	84 2b       	or	r24, r20
  530:	8a bb       	out	0x1a, r24	; 26
  532:	08 95       	ret
+			{
+				//Error handling
+			}
+			break;
+			case PORT_B:
+			if (direction == IN)
  534:	41 11       	cpse	r20, r1
  536:	0e c0       	rjmp	.+28     	; 0x554 <DIO_Init+0x7a>
+			{
+				// DDRB &= ~(1 << pinNumber); // Input -> clear bit
+				CLEAR_BIT(DDRB, pinNumber);
  538:	47 b3       	in	r20, 0x17	; 23
  53a:	21 e0       	ldi	r18, 0x01	; 1
  53c:	30 e0       	ldi	r19, 0x00	; 0
@@ -905,9 +957,14 @@ int main(void)
  54e:	84 23       	and	r24, r20
  550:	87 bb       	out	0x17, r24	; 23
  552:	08 95       	ret
+			}
+			else if (direction == OUT)
  554:	41 30       	cpi	r20, 0x01	; 1
  556:	09 f0       	breq	.+2      	; 0x55a <DIO_Init+0x80>
  558:	4a c0       	rjmp	.+148    	; 0x5ee <DIO_Init+0x114>
+			{
+				// DDRB |= ~(1 << pinNumber); // Output -> clear bit
+				SET_BIT(DDRB, pinNumber);
  55a:	47 b3       	in	r20, 0x17	; 23
  55c:	21 e0       	ldi	r18, 0x01	; 1
  55e:	30 e0       	ldi	r19, 0x00	; 0
@@ -921,8 +978,17 @@ int main(void)
  56e:	84 2b       	or	r24, r20
  570:	87 bb       	out	0x17, r24	; 23
  572:	08 95       	ret
+			{
+				//Error handling
+			}
+			break;
+			case PORT_C:
+			if (direction == IN)
  574:	41 11       	cpse	r20, r1
  576:	0e c0       	rjmp	.+28     	; 0x594 <DIO_Init+0xba>
+			{
+				// DDRC &= ~(1 << pinNumber); // Input -> clear bit
+				CLEAR_BIT(DDRC, pinNumber);
  578:	44 b3       	in	r20, 0x14	; 20
  57a:	21 e0       	ldi	r18, 0x01	; 1
  57c:	30 e0       	ldi	r19, 0x00	; 0
@@ -937,8 +1003,13 @@ int main(void)
  58e:	84 23       	and	r24, r20
  590:	84 bb       	out	0x14, r24	; 20
  592:	08 95       	ret
+			}
+			else if (direction == OUT)
  594:	41 30       	cpi	r20, 0x01	; 1
  596:	59 f5       	brne	.+86     	; 0x5ee <DIO_Init+0x114>
+			{
+				// DDRC |= ~(1 << pinNumber); // Output -> clear bit
+				SET_BIT(DDRC, pinNumber);
  598:	44 b3       	in	r20, 0x14	; 20
  59a:	21 e0       	ldi	r18, 0x01	; 1
  59c:	30 e0       	ldi	r19, 0x00	; 0
@@ -952,8 +1023,17 @@ int main(void)
  5ac:	84 2b       	or	r24, r20
  5ae:	84 bb       	out	0x14, r24	; 20
  5b0:	08 95       	ret
+			{
+				//Error handling
+			}
+			break;
+			case PORT_D:
+			if (direction == IN)
  5b2:	41 11       	cpse	r20, r1
  5b4:	0e c0       	rjmp	.+28     	; 0x5d2 <DIO_Init+0xf8>
+			{
+				// DDRD &= ~(1 << pinNumber); // Input -> clear bit
+				CLEAR_BIT(DDRD, pinNumber);
  5b6:	41 b3       	in	r20, 0x11	; 17
  5b8:	21 e0       	ldi	r18, 0x01	; 1
  5ba:	30 e0       	ldi	r19, 0x00	; 0
@@ -968,8 +1048,13 @@ int main(void)
  5cc:	84 23       	and	r24, r20
  5ce:	81 bb       	out	0x11, r24	; 17
  5d0:	08 95       	ret
+			}
+			else if (direction == OUT)
  5d2:	41 30       	cpi	r20, 0x01	; 1
  5d4:	61 f4       	brne	.+24     	; 0x5ee <DIO_Init+0x114>
+			{
+				// DDRD |= ~(1 << pinNumber); // Output -> clear bit
+				SET_BIT(DDRD, pinNumber);
  5d6:	41 b3       	in	r20, 0x11	; 17
  5d8:	21 e0       	ldi	r18, 0x01	; 1
  5da:	30 e0       	ldi	r19, 0x00	; 0
@@ -985,6 +1070,12 @@ int main(void)
  5ee:	08 95       	ret
 
 000005f0 <DIO_Write>:
+	}
+}
+
+void DIO_Write(uint8_t pinNumber, uint8_t portNumber, uint8_t value)
+{
+	switch (portNumber)
  5f0:	62 34       	cpi	r22, 0x42	; 66
  5f2:	59 f1       	breq	.+86     	; 0x64a <DIO_Write+0x5a>
  5f4:	18 f4       	brcc	.+6      	; 0x5fc <DIO_Write+0xc>
@@ -998,8 +1089,14 @@ int main(void)
  604:	09 f4       	brne	.+2      	; 0x608 <DIO_Write+0x18>
  606:	60 c0       	rjmp	.+192    	; 0x6c8 <DIO_Write+0xd8>
  608:	08 95       	ret
+	{
+		case PORT_A:
+		if(value == LOW)
  60a:	41 11       	cpse	r20, r1
  60c:	0e c0       	rjmp	.+28     	; 0x62a <DIO_Write+0x3a>
+		{
+			// PORTA &= ~(1<<pinNumber); // write 0 -> clear bit
+			CLEAR_BIT(PORTA, pinNumber);
  60e:	4b b3       	in	r20, 0x1b	; 27
  610:	21 e0       	ldi	r18, 0x01	; 1
  612:	30 e0       	ldi	r19, 0x00	; 0
@@ -1014,9 +1111,14 @@ int main(void)
  624:	84 23       	and	r24, r20
  626:	8b bb       	out	0x1b, r24	; 27
  628:	08 95       	ret
+		}
+		else if (value == HIGH)
  62a:	41 30       	cpi	r20, 0x01	; 1
  62c:	09 f0       	breq	.+2      	; 0x630 <DIO_Write+0x40>
  62e:	6a c0       	rjmp	.+212    	; 0x704 <DIO_Write+0x114>
+		{
+			// PORTA |= (1<<pinNumber); // write 1 -> set bit
+			SET_BIT(PORTA, pinNumber);
  630:	4b b3       	in	r20, 0x1b	; 27
  632:	21 e0       	ldi	r18, 0x01	; 1
  634:	30 e0       	ldi	r19, 0x00	; 0
@@ -1030,8 +1132,17 @@ int main(void)
  644:	84 2b       	or	r24, r20
  646:	8b bb       	out	0x1b, r24	; 27
  648:	08 95       	ret
+		{
+			// Error handling
+		}
+		break;
+		case PORT_B:
+		if(value == LOW)
  64a:	41 11       	cpse	r20, r1
  64c:	0e c0       	rjmp	.+28     	; 0x66a <DIO_Write+0x7a>
+		{
+			// PORTB &= ~(1<<pinNumber); // write 0 -> clear bit
+			CLEAR_BIT(PORTB, pinNumber);
  64e:	48 b3       	in	r20, 0x18	; 24
  650:	21 e0       	ldi	r18, 0x01	; 1
  652:	30 e0       	ldi	r19, 0x00	; 0
@@ -1046,9 +1157,14 @@ int main(void)
  664:	84 23       	and	r24, r20
  666:	88 bb       	out	0x18, r24	; 24
  668:	08 95       	ret
+		}
+		else if (value == HIGH)
  66a:	41 30       	cpi	r20, 0x01	; 1
  66c:	09 f0       	breq	.+2      	; 0x670 <DIO_Write+0x80>
  66e:	4a c0       	rjmp	.+148    	; 0x704 <DIO_Write+0x114>
+		{
+			// PORTB |= (1<<pinNumber); // write 1 -> set bit
+			SET_BIT(PORTB, pinNumber);
  670:	48 b3       	in	r20, 0x18	; 24
  672:	21 e0       	ldi	r18, 0x01	; 1
  674:	30 e0       	ldi	r19, 0x00	; 0
@@ -1062,8 +1178,17 @@ int main(void)
  684:	84 2b       	or	r24, r20
  686:	88 bb       	out	0x18, r24	; 24
  688:	08 95       	ret
+		{
+			// Error handling
+		}
+		break;
+		case PORT_C:
+		if(value == LOW)
  68a:	41 11       	cpse	r20, r1
  68c:	0e c0       	rjmp	.+28     	; 0x6aa <DIO_Write+0xba>
+		{
+			// PORTC &= ~(1<<pinNumber); // write 0 -> clear bit
+			CLEAR_BIT(PORTC, pinNumber);
  68e:	45 b3       	in	r20, 0x15	; 21
  690:	21 e0       	ldi	r18, 0x01	; 1
  692:	30 e0       	ldi	r19, 0x00	; 0
@@ -1078,8 +1203,13 @@ int main(void)
  6a4:	84 23       	and	r24, r20
  6a6:	85 bb       	out	0x15, r24	; 21
  6a8:	08 95       	ret
+		}
+		else if (value == HIGH)
  6aa:	41 30       	cpi	r20, 0x01	; 1
  6ac:	59 f5       	brne	.+86     	; 0x704 <DIO_Write+0x114>
+		{
+			// PORTC |= (1<<pinNumber); // write 1 -> set bit
+			SET_BIT(PORTC, pinNumber);
  6ae:	45 b3       	in	r20, 0x15	; 21
  6b0:	21 e0       	ldi	r18, 0x01	; 1
  6b2:	30 e0       	ldi	r19, 0x00	; 0
@@ -1093,8 +1223,17 @@ int main(void)
  6c2:	84 2b       	or	r24, r20
  6c4:	85 bb       	out	0x15, r24	; 21
  6c6:	08 95       	ret
+		{
+			// Error handling
+		}
+		break;
+		case PORT_D:
+		if(value == LOW)
  6c8:	41 11       	cpse	r20, r1
  6ca:	0e c0       	rjmp	.+28     	; 0x6e8 <DIO_Write+0xf8>
+		{
+			// PORTD &= ~(1<<pinNumber); // write 0 -> clear bit
+			CLEAR_BIT(PORTD, pinNumber);
  6cc:	42 b3       	in	r20, 0x12	; 18
  6ce:	21 e0       	ldi	r18, 0x01	; 1
  6d0:	30 e0       	ldi	r19, 0x00	; 0
@@ -1109,8 +1248,13 @@ int main(void)
  6e2:	84 23       	and	r24, r20
  6e4:	82 bb       	out	0x12, r24	; 18
  6e6:	08 95       	ret
+		}
+		else if (value == HIGH)
  6e8:	41 30       	cpi	r20, 0x01	; 1
  6ea:	61 f4       	brne	.+24     	; 0x704 <DIO_Write+0x114>
+		{
+			// PORTD |= (1<<pinNumber); // write 1 -> set bit
+			SET_BIT(PORTD, pinNumber);
  6ec:	42 b3       	in	r20, 0x12	; 18
  6ee:	21 e0       	ldi	r18, 0x01	; 1
  6f0:	30 e0       	ldi	r19, 0x00	; 0
@@ -1126,6 +1270,12 @@ int main(void)
  704:	08 95       	ret
 
 00000706 <DIO_Toggle>:
+	}
+}
+
+void DIO_Toggle(uint8_t pinNumber, uint8_t portNumber)
+{
+	switch (portNumber)
  706:	62 34       	cpi	r22, 0x42	; 66
  708:	b1 f0       	breq	.+44     	; 0x736 <DIO_Toggle+0x30>
  70a:	18 f4       	brcc	.+6      	; 0x712 <DIO_Toggle+0xc>
@@ -1137,6 +1287,10 @@ int main(void)
  716:	64 34       	cpi	r22, 0x44	; 68
  718:	41 f1       	breq	.+80     	; 0x76a <DIO_Toggle+0x64>
  71a:	08 95       	ret
+	{
+		case PORT_A:
+		// PORTA ^= (1<<pinNumber); // toggle bit
+		TOGGEL_BIT(PORTA, pinNumber);
  71c:	4b b3       	in	r20, 0x1b	; 27
  71e:	21 e0       	ldi	r18, 0x01	; 1
  720:	30 e0       	ldi	r19, 0x00	; 0
@@ -1149,7 +1303,11 @@ int main(void)
  72e:	cb 01       	movw	r24, r22
  730:	84 27       	eor	r24, r20
  732:	8b bb       	out	0x1b, r24	; 27
+		break;
  734:	08 95       	ret
+		case PORT_B:
+		// PORTB ^= (1<<pinNumber); // toggle bit
+		TOGGEL_BIT(PORTB, pinNumber);
  736:	48 b3       	in	r20, 0x18	; 24
  738:	21 e0       	ldi	r18, 0x01	; 1
  73a:	30 e0       	ldi	r19, 0x00	; 0
@@ -1162,7 +1320,11 @@ int main(void)
  748:	cb 01       	movw	r24, r22
  74a:	84 27       	eor	r24, r20
  74c:	88 bb       	out	0x18, r24	; 24
+		break;
  74e:	08 95       	ret
+		case PORT_C:
+		// PORTC ^= (1<<pinNumber); // toggle bit
+		TOGGEL_BIT(PORTC, pinNumber);
  750:	45 b3       	in	r20, 0x15	; 21
  752:	21 e0       	ldi	r18, 0x01	; 1
  754:	30 e0       	ldi	r19, 0x00	; 0
@@ -1175,7 +1337,11 @@ int main(void)
  762:	cb 01       	movw	r24, r22
  764:	84 27       	eor	r24, r20
  766:	85 bb       	out	0x15, r24	; 21
+		break;
  768:	08 95       	ret
+		case PORT_D:
+		// PORTD ^= (1<<pinNumber); // toggle bit
+		TOGGEL_BIT(PORTD, pinNumber);
  76a:	42 b3       	in	r20, 0x12	; 18
  76c:	21 e0       	ldi	r18, 0x01	; 1
  76e:	30 e0       	ldi	r19, 0x00	; 0
