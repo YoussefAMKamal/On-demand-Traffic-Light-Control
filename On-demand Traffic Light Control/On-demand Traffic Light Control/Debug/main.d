@@ -5,11 +5,11 @@ main.d main.o: .././main.c .././Application/app.h \
  .././Application/../HAL/LED\ Driver/../../EUCAL/DIO\ Driver/../../Utlities/registers.h \
  .././Application/../HAL/LED\ Driver/../../EUCAL/DIO\ Driver/../../Utlities/standared_types.h \
  .././Application/../HAL/Button\ Driver/button.h \
- .././Application/../HAL/Button\ Driver/../../EUCAL/DIO\ Driver/DIO.h \
+ .././Application/../HAL/Button\ Driver/../../EUCAL/Timer\ Driver/timer.h \
+ .././Application/../HAL/Button\ Driver/../../EUCAL/Timer\ Driver/../../HAL/LED\ Driver/led.h \
  .././Application/../EUCAL/Timer\ Driver/timer.h \
- .././Application/../EUCAL/Timer\ Driver/../../EUCAL/DIO\ Driver/DIO.h \
- .././Application/../Utlities/interrupt.h \
- .././Application/../Utlities/registers.h
+ .././Application/../EUCAL/Interrupt\ Driver/interrupt.h \
+ .././Application/../EUCAL/Interrupt\ Driver/../../HAL/Button\ Driver/button.h
 
 .././Application/app.h:
 
@@ -25,12 +25,12 @@ main.d main.o: .././main.c .././Application/app.h \
 
 .././Application/../HAL/Button\ Driver/button.h:
 
-.././Application/../HAL/Button\ Driver/../../EUCAL/DIO\ Driver/DIO.h:
+.././Application/../HAL/Button\ Driver/../../EUCAL/Timer\ Driver/timer.h:
+
+.././Application/../HAL/Button\ Driver/../../EUCAL/Timer\ Driver/../../HAL/LED\ Driver/led.h:
 
 .././Application/../EUCAL/Timer\ Driver/timer.h:
 
-.././Application/../EUCAL/Timer\ Driver/../../EUCAL/DIO\ Driver/DIO.h:
+.././Application/../EUCAL/Interrupt\ Driver/interrupt.h:
 
-.././Application/../Utlities/interrupt.h:
-
-.././Application/../Utlities/registers.h:
+.././Application/../EUCAL/Interrupt\ Driver/../../HAL/Button\ Driver/button.h:

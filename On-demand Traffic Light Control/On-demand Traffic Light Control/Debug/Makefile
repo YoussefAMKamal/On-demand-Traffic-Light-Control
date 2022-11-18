@@ -36,6 +36,7 @@ SUBDIRS :=  \
 ../Application \
 ../EUCAL \
 ../EUCAL/DIO\ Driver \
+../EUCAL/Interrupt\ Driver \
 ../EUCAL/Timer\ Driver \
 ../HAL \
 ../HAL/LED\ Driver \
@@ -46,6 +47,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../Application/app.c \
+../EUCAL/Interrupt\ Driver/Interrupt.c \
 ../EUCAL/Timer\ Driver/timer.c \
 ../HAL/Button\ Driver/button.c \
 ../HAL/LED\ Driver/led.c \
@@ -61,6 +63,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 Application/app.o \
+EUCAL/Interrupt\ Driver/Interrupt.o \
 EUCAL/Timer\ Driver/timer.o \
 HAL/Button\ Driver/button.o \
 HAL/LED\ Driver/led.o \
@@ -69,6 +72,7 @@ EUCAL/DIO\ Driver/DIO.o
 
 OBJS_AS_ARGS +=  \
 Application/app.o \
+"EUCAL/Interrupt Driver/Interrupt.o" \
 "EUCAL/Timer Driver/timer.o" \
 "HAL/Button Driver/button.o" \
 "HAL/LED Driver/led.o" \
@@ -77,6 +81,7 @@ main.o \
 
 C_DEPS +=  \
 Application/app.d \
+EUCAL/Interrupt\ Driver/Interrupt.d \
 EUCAL/Timer\ Driver/timer.d \
 HAL/Button\ Driver/button.d \
 HAL/LED\ Driver/led.d \
@@ -85,6 +90,7 @@ EUCAL/DIO\ Driver/DIO.d
 
 C_DEPS_AS_ARGS +=  \
 Application/app.d \
+"EUCAL/Interrupt Driver/Interrupt.d" \
 "EUCAL/Timer Driver/timer.d" \
 "HAL/Button Driver/button.d" \
 "HAL/LED Driver/led.d" \
@@ -106,6 +112,13 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 Application/app.o: ../Application/app.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../Application" -I"../EUCAL" -I"../EUCAL/DIO Driver" -I"../EUCAL/Interrupt Driver" -I"../HAL" -I"../HAL/LED Driver" -I"../HAL/Button Driver" -I"../Utlities"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+EUCAL/Interrupt\ Driver/Interrupt.o: ../EUCAL/Interrupt\ Driver/Interrupt.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../Application" -I"../EUCAL" -I"../EUCAL/DIO Driver" -I"../EUCAL/Interrupt Driver" -I"../HAL" -I"../HAL/LED Driver" -I"../HAL/Button Driver" -I"../Utlities"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32a -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32a" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -18,3 +18,17 @@ void BUTTON_Read(uint8_t buttonPort, uint8_t buttonPin, uint8_t* value)
 {
 	DIO_Read(buttonPin, buttonPort, value);
 }
+
+void Test_Button(void)
+{
+	uint8_t* state = 0;
+	BUTTON_Init(BUTTON_PORT, BUTTON_PIN);
+	LED_Init(LED_PEDESTRIANS, LED_YELLOW);
+	BUTTON_Read(BUTTON_PORT, BUTTON_PIN, state);
+	if (*state == HIGH)
+	{
+		LED_ON(LED_PEDESTRIANS, LED_YELLOW);
+		Timer_ON(500);
+		LED_OFF(LED_PEDESTRIANS, LED_YELLOW);
+	} 
+}

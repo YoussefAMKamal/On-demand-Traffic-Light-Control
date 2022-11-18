@@ -30,3 +30,10 @@ void LED_Toggle(uint8_t ledPort, uint8_t ledPin)
 {
 	DIO_Toggle(ledPin, ledPort);
 }
+
+// Test
+void Test_LED(void)
+{
+	LED_Init(LED_CAR, LED_RED);
+	LED_ON(LED_CAR, LED_RED);
+}

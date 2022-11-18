@@ -10,7 +10,8 @@
 #define BUTTON_H_
 
 // Including Files
-#include "../../EUCAL/DIO Driver/DIO.h"
+#include "../../EUCAL/Timer Driver/timer.h"
+
 
 // Macros
 #define BUTTON_PIN	PIN2			// Button pin
@@ -19,5 +20,8 @@
 // Functions Prototypes
 void BUTTON_Init(uint8_t buttonPort, uint8_t buttonPin);
 void BUTTON_Read(uint8_t buttonPort, uint8_t buttonPin, uint8_t* value);
+
+// Test
+void Test_Button(void);
 
 #endif /* BUTTON_H_ */

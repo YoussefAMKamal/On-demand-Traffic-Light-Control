@@ -17,6 +17,12 @@ int main(void)
     {
 		// Starting Application
 		APP_Start();
+		
+		// Test Function for every driver alone
+		//Test_LED();
+		//Test_Timer();
+		//Test_Button();
+		//Test_Interrupt();
     }
 }
 

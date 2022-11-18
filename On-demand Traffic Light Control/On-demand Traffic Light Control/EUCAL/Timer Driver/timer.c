@@ -63,3 +63,15 @@ void Timer_ON(uint16_t mSec)
 			// Timer stop
 			TIMER0_COUNTER = 0x00;
 }
+
+// Test
+void Test_Timer(void)
+{
+	LED_Init(LED_CAR, LED_RED);
+	Timer_Init();
+	for (int i=0;i<20;i++)
+	{
+		LED_Toggle(LED_CAR, LED_RED);
+		Timer_ON(100);
+	}
+}
