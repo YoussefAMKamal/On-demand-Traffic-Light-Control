@@ -7,3 +7,5 @@ Although this is internationally standardized, there is variations on national a
 ![Capture](https://user-images.githubusercontent.com/113982207/201496664-e72bdc2c-7b07-4077-ac59-0ba1443bc18b.PNG)
 # Flowchart
 ![Flowchart](https://user-images.githubusercontent.com/113982207/201496684-57dc4823-ccd6-4249-bffb-2cd26b439618.jpg)
+# Notes
+To activate the test function in timer.c and intrerrupt.c you must remove all the comments signs and include led.h in the timer.h and button.h in interrupt.h
