@@ -11,7 +11,7 @@
 
 // Including Files
 #include "../../EUCAL/Timer Driver/timer.h"
-
+#include "../../EUCAL/Interrupt Driver/interrupt.h"
 
 // Macros
 #define BUTTON_PIN	PIN2			// Button pin

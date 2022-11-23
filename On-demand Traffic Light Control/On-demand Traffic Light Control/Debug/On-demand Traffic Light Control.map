@@ -77,8 +77,6 @@ Discarded input sections
  .text          0x00000000        0x0 EUCAL/Timer Driver/timer.o
  .data          0x00000000        0x0 EUCAL/Timer Driver/timer.o
  .bss           0x00000000        0x0 EUCAL/Timer Driver/timer.o
- .text.Test_Timer
-                0x00000000       0x34 EUCAL/Timer Driver/timer.o
  .text          0x00000000        0x0 HAL/Button Driver/button.o
  .data          0x00000000        0x0 HAL/Button Driver/button.o
  .bss           0x00000000        0x0 HAL/Button Driver/button.o
@@ -642,86 +640,86 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x138
+.debug_aranges  0x00000000      0x130
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x40 Application/app.o
  .debug_aranges
-                0x00000040       0x30 EUCAL/Timer Driver/timer.o
+                0x00000040       0x28 EUCAL/Timer Driver/timer.o
  .debug_aranges
-                0x00000070       0x30 HAL/Button Driver/button.o
+                0x00000068       0x30 HAL/Button Driver/button.o
  .debug_aranges
-                0x000000a0       0x40 HAL/LED Driver/led.o
+                0x00000098       0x40 HAL/LED Driver/led.o
  .debug_aranges
-                0x000000e0       0x20 main.o
+                0x000000d8       0x20 main.o
  .debug_aranges
-                0x00000100       0x38 EUCAL/DIO Driver/DIO.o
+                0x000000f8       0x38 EUCAL/DIO Driver/DIO.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x144a
+.debug_info     0x00000000     0x13aa
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_info    0x000004e6      0x720 Application/app.o
- .debug_info    0x00000c06      0x1cc EUCAL/Timer Driver/timer.o
- .debug_info    0x00000dd2      0x239 HAL/Button Driver/button.o
- .debug_info    0x0000100b      0x222 HAL/LED Driver/led.o
- .debug_info    0x0000122d       0xa0 main.o
- .debug_info    0x000012cd      0x17d EUCAL/DIO Driver/DIO.o
+ .debug_info    0x00000c06      0x12c EUCAL/Timer Driver/timer.o
+ .debug_info    0x00000d32      0x239 HAL/Button Driver/button.o
+ .debug_info    0x00000f6b      0x222 HAL/LED Driver/led.o
+ .debug_info    0x0000118d       0xa0 main.o
+ .debug_info    0x0000122d      0x17d EUCAL/DIO Driver/DIO.o
 
-.debug_abbrev   0x00000000      0x8e9
+.debug_abbrev   0x00000000      0x891
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_abbrev  0x000004a3      0x100 Application/app.o
- .debug_abbrev  0x000005a3      0x100 EUCAL/Timer Driver/timer.o
- .debug_abbrev  0x000006a3       0xb0 HAL/Button Driver/button.o
- .debug_abbrev  0x00000753       0x98 HAL/LED Driver/led.o
- .debug_abbrev  0x000007eb       0x68 main.o
- .debug_abbrev  0x00000853       0x96 EUCAL/DIO Driver/DIO.o
+ .debug_abbrev  0x000005a3       0xa8 EUCAL/Timer Driver/timer.o
+ .debug_abbrev  0x0000064b       0xb0 HAL/Button Driver/button.o
+ .debug_abbrev  0x000006fb       0x98 HAL/LED Driver/led.o
+ .debug_abbrev  0x00000793       0x68 main.o
+ .debug_abbrev  0x000007fb       0x96 EUCAL/DIO Driver/DIO.o
 
-.debug_line     0x00000000      0xcc1
+.debug_line     0x00000000      0xc1c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_line    0x00000116      0x405 Application/app.o
- .debug_line    0x0000051b      0x230 EUCAL/Timer Driver/timer.o
- .debug_line    0x0000074b      0x207 HAL/Button Driver/button.o
- .debug_line    0x00000952      0x128 HAL/LED Driver/led.o
- .debug_line    0x00000a7a       0x63 main.o
- .debug_line    0x00000add      0x1e4 EUCAL/DIO Driver/DIO.o
+ .debug_line    0x0000051b      0x18b EUCAL/Timer Driver/timer.o
+ .debug_line    0x000006a6      0x207 HAL/Button Driver/button.o
+ .debug_line    0x000008ad      0x128 HAL/LED Driver/led.o
+ .debug_line    0x000009d5       0x63 main.o
+ .debug_line    0x00000a38      0x1e4 EUCAL/DIO Driver/DIO.o
 
-.debug_frame    0x00000000      0x228
+.debug_frame    0x00000000      0x20c
  *(.debug_frame)
  .debug_frame   0x00000000       0x90 Application/app.o
- .debug_frame   0x00000090       0x78 EUCAL/Timer Driver/timer.o
- .debug_frame   0x00000108       0x44 HAL/Button Driver/button.o
- .debug_frame   0x0000014c       0x64 HAL/LED Driver/led.o
- .debug_frame   0x000001b0       0x24 main.o
- .debug_frame   0x000001d4       0x54 EUCAL/DIO Driver/DIO.o
+ .debug_frame   0x00000090       0x5c EUCAL/Timer Driver/timer.o
+ .debug_frame   0x000000ec       0x44 HAL/Button Driver/button.o
+ .debug_frame   0x00000130       0x64 HAL/LED Driver/led.o
+ .debug_frame   0x00000194       0x24 main.o
+ .debug_frame   0x000001b8       0x54 EUCAL/DIO Driver/DIO.o
 
-.debug_str      0x00000000      0x530
+.debug_str      0x00000000      0x525
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32a/avr5/crtatmega32a.o
  .debug_str     0x00000196      0x216 Application/app.o
                                 0x22f (size before relaxing)
- .debug_str     0x000003ac       0x8c EUCAL/Timer Driver/timer.o
-                                0x221 (size before relaxing)
- .debug_str     0x00000438       0x69 HAL/Button Driver/button.o
+ .debug_str     0x000003ac       0x81 EUCAL/Timer Driver/timer.o
+                                0x202 (size before relaxing)
+ .debug_str     0x0000042d       0x69 HAL/Button Driver/button.o
                                 0x203 (size before relaxing)
- .debug_str     0x000004a1       0x45 HAL/LED Driver/led.o
+ .debug_str     0x00000496       0x45 HAL/LED Driver/led.o
                                 0x1de (size before relaxing)
- .debug_str     0x000004e6       0x11 main.o
+ .debug_str     0x000004db       0x11 main.o
                                 0x189 (size before relaxing)
- .debug_str     0x000004f7       0x39 EUCAL/DIO Driver/DIO.o
+ .debug_str     0x000004ec       0x39 EUCAL/DIO Driver/DIO.o
                                 0x1d3 (size before relaxing)
 
-.debug_loc      0x00000000      0xb50
+.debug_loc      0x00000000      0xafd
  *(.debug_loc)
  .debug_loc     0x00000000      0x1cf Application/app.o
- .debug_loc     0x000001cf      0x106 EUCAL/Timer Driver/timer.o
- .debug_loc     0x000002d5       0xd6 HAL/Button Driver/button.o
- .debug_loc     0x000003ab      0x160 HAL/LED Driver/led.o
- .debug_loc     0x0000050b      0x645 EUCAL/DIO Driver/DIO.o
+ .debug_loc     0x000001cf       0xb3 EUCAL/Timer Driver/timer.o
+ .debug_loc     0x00000282       0xd6 HAL/Button Driver/button.o
+ .debug_loc     0x00000358      0x160 HAL/LED Driver/led.o
+ .debug_loc     0x000004b8      0x645 EUCAL/DIO Driver/DIO.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -741,14 +739,14 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xd8
+.debug_ranges   0x00000000       0xd0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x30 Application/app.o
- .debug_ranges  0x00000030       0x20 EUCAL/Timer Driver/timer.o
- .debug_ranges  0x00000050       0x20 HAL/Button Driver/button.o
- .debug_ranges  0x00000070       0x30 HAL/LED Driver/led.o
- .debug_ranges  0x000000a0       0x10 main.o
- .debug_ranges  0x000000b0       0x28 EUCAL/DIO Driver/DIO.o
+ .debug_ranges  0x00000030       0x18 EUCAL/Timer Driver/timer.o
+ .debug_ranges  0x00000048       0x20 HAL/Button Driver/button.o
+ .debug_ranges  0x00000068       0x30 HAL/LED Driver/led.o
+ .debug_ranges  0x00000098       0x10 main.o
+ .debug_ranges  0x000000a8       0x28 EUCAL/DIO Driver/DIO.o
 
 .debug_macro
  *(.debug_macro)

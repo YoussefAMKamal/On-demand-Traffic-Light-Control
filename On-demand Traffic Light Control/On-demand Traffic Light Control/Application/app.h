@@ -12,8 +12,6 @@
 // Including Files
 #include "../HAL/LED Driver/led.h"
 #include "../HAL/Button Driver/button.h"
-#include "../EUCAL/Timer Driver/timer.h"
-#include "../EUCAL/Interrupt Driver/interrupt.h"
 
 // Functions Prototypes
 void APP_Init(void);
